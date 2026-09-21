@@ -156,7 +156,62 @@ schlechtere Entfernungsauflösung, größere Antennen.
 
 ---
 
-## 6. Technische Prinzipien
+## 6. Aufzeichnungsprotokoll für Messdaten
+
+**Gilt ab der ersten Messung in Phase 1.** Jede Messreihe wird so aufgenommen, dass sie
+später als Validierungsdatensatz für die Sensorsimulation (Ausbaustufe 2) taugt. Das
+kostet zum Messzeitpunkt wenige Minuten; nachträglich ist es nicht rekonstruierbar und
+die Messung wäre zu wiederholen.
+
+### Immer mitschreiben
+
+- **Roher ADC-Würfel** (Chirp × Rampe × Rx-Kanal), unverändert und ungefiltert.
+  Abgeleitete Darstellungen (Range-Doppler, Punktwolke) werden nie anstelle der
+  Rohdaten gespeichert, sondern höchstens zusätzlich.
+- **Vollständige Chirp-Konfiguration**: Startfrequenz, Bandbreite, Rampendauer,
+  Rampen pro Frame, Frame-Rate, Abtastrate, Anzahl Samples, Rx-Kanäle, Verstärkung.
+  Direkt aus dem RDK auslesen, nicht aus der Erinnerung notieren.
+- **Sensorpose**: Position im Raum (x, y, z gegen einen festen Raumursprung),
+  Blickrichtung, Neigung, Stativhöhe. Bodenmarkierungen mit Kreppband.
+- **Raumgeometrie**: Grundriss mit Maßen, Höhe, Position von Wänden, Fenstern, Türen,
+  Möbeln und Metallflächen. Einmal pro Messort, als Skizze mit Maßen plus Foto.
+- **Materialien** der dominierenden Flächen (Gipskarton, Ziegel, Glas, Holz, Metall) —
+  Eingangsgröße für die späteren frequenzabhängigen Materialparameter.
+- **Ziel-Ground-Truth**: exakte Entfernungen und Winkel der Ziele, bei Personen
+  zusätzlich Körpergröße, Haltung, Kleidung und der Bewegungsablauf.
+- **Umgebungsbedingungen**: Temperatur, grob die Luftfeuchte, Datum und Uhrzeit.
+  Temperatur, weil die Frequenzrampe und das Phasenrauschen davon abhängen.
+- **Referenzsensor-Rohsignal** (Polar H10: RR-Intervalle) mit gemeinsamer Zeitbasis
+  zum Radar. Ohne belastbare Synchronisation ist der Messvergleich wertlos.
+
+### Ablage
+
+Pro Messung ein Verzeichnis: Rohdatendatei plus eine maschinenlesbare Metadatendatei
+(JSON oder YAML) mit allen obigen Feldern, dazu Skizze und Fotos. Das Metadatenschema
+wird **vor** der ersten Messung festgelegt, damit alle Messreihen vergleichbar bleiben.
+Lückenlose laufende Nummerierung, keine Messung überschreiben — auch Fehlmessungen
+bleiben erhalten und werden als solche markiert.
+
+### Winkelreflektor als absoluter Referenzfall
+
+Der Winkelreflektor ist nicht nur Prüfstein der Verarbeitungskette, sondern der spätere
+Ankerpunkt der Simulation: Sein Streuquerschnitt ist analytisch berechenbar. Nur an
+diesem Fall lässt sich zeigen, dass das Vorwärtsmodell **absolut** stimmt und nicht bloß
+relativ plausibel aussieht.
+
+Deshalb wird er systematisch vermessen, nicht nur einmal zur Kalibrierung:
+
+- Entfernungssweep in definierten Schritten (z. B. 0,5 m bis 5 m)
+- Winkelsweep in Azimut, bei bekannter Orientierung des Reflektors
+- Kantenlänge, Winkelfehler und Materialstärke des Reflektors dokumentieren —
+  der berechnete RCS gilt nur für die tatsächliche Geometrie
+- je eine Referenzmessung des leeren Raums (nur Clutter) vor und nach jedem Sweep
+- möglichst eine Wiederholung des gleichen Sweeps in einem zweiten Raum, um
+  Clutter-Einfluss von Sensoreigenschaften zu trennen
+
+---
+
+## 7. Technische Prinzipien
 
 - **Immer mit Rohdaten arbeiten**, nie mit den Demo-Algorithmen des Herstellers.
   Infineon weist selbst darauf hin, dass anwendungsspezifische Algorithmen separat
@@ -165,13 +220,15 @@ schlechtere Entfernungsauflösung, größere Antennen.
   Herstellerlogik. Schützt vor Abhängigkeit von einem Zulieferer.
 - **Gegen Theorie validieren, nicht nur gegen Trainingsdaten.** Winkelreflektor mit
   berechenbarem RCS als Prüfstein für die gesamte Kette.
+- **Jede Messung nach dem Aufzeichnungsprotokoll dokumentieren** (Abschnitt 6).
+  Rohdaten ohne Metadaten sind für die spätere Simulationsvalidierung wertlos.
 - Zu lernende Konzepte: FMCW-Beat-Frequenz, Range-FFT, Doppler-FFT, MIMO/Winkel-FFT,
   CFAR, MTI und statische Clutter-Unterdrückung, Phasenextraktion, DACM,
   Mikro-Doppler/STFT
 
 ---
 
-## 7. Literatur
+## 8. Literatur
 
 ### Bücher
 
@@ -207,7 +264,7 @@ liegt in Richards und Chen — zu verstehen, *warum* eine Signatur so aussieht.
 
 ---
 
-## 8. Geschäftsmodell
+## 9. Geschäftsmodell
 
 ### Kostenstruktur (Korrektur eines Missverständnisses)
 
@@ -256,7 +313,7 @@ bevor die Zielgruppe klar ist.
 
 ---
 
-## 9. Risiken
+## 10. Risiken
 
 | Risiko | Gegenmaßnahme |
 |---|---|
@@ -270,7 +327,7 @@ bevor die Zielgruppe klar ist.
 
 ---
 
-## 10. Nächster Schritt
+## 11. Nächster Schritt
 
 **Board bestellen. Datum für Phase 1 festlegen.**
 

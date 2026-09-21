@@ -2,7 +2,7 @@
 
 Arbeitsliste zum Projekt. Grundlage: [projekt.md](projekt.md) und [strategie.md](strategie.md).
 
-**Stand:** 20. September 2026
+**Stand:** 21. September 2026
 **Aktueller Status:** vor Hardwarebeschaffung, noch kein Code
 
 > Preise sind Richtwerte (Stand September 2026) und vor der Bestellung zu prüfen.
@@ -67,6 +67,7 @@ Maus werden dann nicht gebraucht — ein micro-HDMI-Kabel ist trotzdem für den 
       sonst stimmt der berechnete RCS nicht. **10–15 EUR**
 - [ ] **Laser-Entfernungsmesser** (25–40 EUR) oder Maßband 5 m (8 EUR) — Range-Ground-Truth. Der Laser ist reproduzierbarer.
 - [ ] Kreppband — Bodenmarkierungen für wiederholbare Positionen. **5 EUR**
+- [ ] **Thermometer/Hygrometer** — Temperatur beeinflusst Frequenzrampe und Phasenrauschen, gehört ins Messprotokoll. **10–15 EUR**
 - [ ] Weiche Matte oder Matratze für Phase 3 — Sturzmessungen ohne Verletzungsrisiko. Vorhandenes verwenden.
 - [ ] HF-Absorbermaterial (optional, später) — gezielte Mehrwegkontrolle. Erst kaufen, wenn Mehrwege nachweislich stören. **30–80 EUR**
 
@@ -77,8 +78,8 @@ Maus werden dann nicht gebraucht — ein micro-HDMI-Kabel ist trotzdem für den 
 | Radar | 170–220 EUR |
 | Raspberry Pi 4 komplett | 110–150 EUR |
 | Kabel | 35–50 EUR |
-| Messzubehör (ohne Absorber) | 160–240 EUR |
-| **Gesamt Grundausstattung** | **475–660 EUR** |
+| Messzubehör (ohne Absorber) | 170–255 EUR |
+| **Gesamt Grundausstattung** | **485–675 EUR** |
 
 Minimalvariante für den Start — Phase 1 läuft auch ohne Pi direkt am Laptop:
 Radar + Kabel + Stativ ≈ 230–290 EUR. Pi und Referenzsensor lassen sich nachkaufen.
@@ -91,6 +92,7 @@ Radar + Kabel + Stativ ≈ 230–290 EUR. Pi und Referenzsensor lassen sich nach
 - [ ] Sensors-Paper *Remote Monitoring of Human Vital Signs Based on 77-GHz mm-Wave FMCW Radar* durcharbeiten (Kandidat zum Nachimplementieren)
 - [ ] Öffentlichen Rohdatensatz **arXiv 2405.12659** herunterladen (*Comprehensive mmWave FMCW Radar Dataset for Vital Sign Monitoring*)
 - [ ] Python-Umgebung aufsetzen (NumPy, SciPy, Matplotlib, Jupyter) und Repo-Struktur anlegen
+- [ ] **Metadatenschema für Messungen festlegen** (JSON/YAML) nach [projekt.md](projekt.md), Abschnitt 6 — vor der ersten Messung, sonst sind die frühen Messreihen später nicht vergleichbar
 - [ ] Range-FFT und Doppler-FFT gegen den öffentlichen Datensatz implementieren — **Ziel: am Liefertag existiert bereits Code**
 - [ ] Verarbeitungskette sensorunabhängig anlegen, kein Infineon-spezifischer Code im Kern
 - [ ] Richards, *Fundamentals of Radar Signal Processing* besorgen (Bibliothek oder Kauf)
@@ -104,8 +106,13 @@ Radar + Kabel + Stativ ≈ 230–290 EUR. Pi und Referenzsensor lassen sich nach
 - [ ] Pi 4 aufsetzen: 32-Bit-Image bzw. `arm_64bit=0`, SSH, Jupyter Lab
 - [ ] Architektur mit `uname -a` prüfen, RDK-Wheels auf dem Pi installieren
 - [ ] **Rohdaten** (Chirps) auslesen und abspeichern — nicht die Demo-Algorithmen verwenden
+- [ ] Chirp-Konfiguration programmatisch aus dem RDK auslesen und mit jeder Messung ablegen
+- [ ] Grundriss des Messraums mit Maßen aufnehmen (Skizze + Fotos + Materialien der Wände und Möbel)
+- [ ] Raumthermometer aufstellen, Temperatur je Messung protokollieren
 - [ ] Range-Doppler-Karte selbst berechnen (FFT über Chirp und Rampe)
 - [ ] Winkelreflektor bauen und in bekannter Entfernung messen, Range-Achse kalibrieren
+- [ ] **Referenzsweep mit dem Winkelreflektor** aufnehmen: Entfernung 0,5–5 m in festen Schritten, dazu Azimutsweep, Leerraummessung davor und danach — Ankerpunkt für die spätere Simulationsvalidierung
+- [ ] Kantenlänge, Winkelfehler und Materialstärke des gebauten Reflektors dokumentieren (der berechnete RCS gilt nur für die tatsächliche Geometrie)
 - [ ] **Meilenstein:** eigene Bewegung im Raum auf dem Bildschirm sichtbar
 
 ## 4. Phase 2 — Vitalparameter (Woche 3–6)
@@ -113,6 +120,7 @@ Radar + Kabel + Stativ ≈ 230–290 EUR. Pi und Referenzsensor lassen sich nach
 - [ ] Phasenextraktion am Range-Bin einer sitzenden Person
 - [ ] DC-Offset-Korrektur (Kreismittelpunkt-Tracking)
 - [ ] Bandpassfilterung, Trennung Atmung / Herzschlag
+- [ ] Gemeinsame Zeitbasis zwischen Radar und Polar H10 herstellen und prüfen — ohne belastbare Synchronisation ist der Messvergleich wertlos
 - [ ] Validierung gegen Polar H10, Fehlerstatistik über mehrere Probanden
 - [ ] **Meilenstein:** dokumentierte Atemfrequenzmessung mit Messvergleich
 
