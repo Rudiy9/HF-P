@@ -66,10 +66,24 @@ Konkret:
 **Code:** noch keiner
 **Hardware:** noch nicht bestellt
 **Nächster Schritt:** Board bestellen, Termin für Phase 1 im Kalender fixieren; parallel
-TI-Application-Note und Sensors-Paper lesen und die Pipeline gegen den öffentlichen
-arXiv-Datensatz vorbereiten.
+TI-Application-Note und Sensors-Paper lesen, die Pipeline gegen den öffentlichen
+arXiv-Datensatz vorbereiten und das Metadatenschema für Messungen festlegen.
 
 ## Fortschrittsprotokoll
+
+### 2026-09-21 — Aufzeichnungsprotokoll für Messdaten festgelegt
+- `projekt.md` um Abschnitt 6 „Aufzeichnungsprotokoll für Messdaten" ergänzt: roher
+  ADC-Würfel, vollständige Chirp-Konfiguration, Sensorpose, Raumgeometrie und
+  Materialien, Ziel-Ground-Truth, Temperatur, Referenzsensor mit gemeinsamer Zeitbasis
+- Gilt ab der ersten Messung in Phase 1 — Ziel ist, dass jede Messreihe zugleich als
+  Validierungsdatensatz für Ausbaustufe 2 (Sensorsimulation) taugt
+- Winkelreflektor als **absoluter** Referenzfall definiert: systematischer Entfernungs-
+  und Azimutsweep mit Leerraummessungen, nicht nur eine einmalige Kalibriermessung
+- `todo.md` ergänzt: Metadatenschema vor der ersten Messung festlegen, Reflektorsweep
+  und Raumdokumentation in Phase 1, Zeitsynchronisation Radar/Polar H10 in Phase 2,
+  Thermometer in der Einkaufsliste (Budget jetzt 485–675 EUR)
+- Anlass: Diskussion über synthetische Trainingsdaten als Geschäftsfeld — verkäuflich
+  ist nicht der Datensatz, sondern die gegen reale Messungen belegte Validierung
 
 ### 2026-09-20 — ToDo-Liste und Projektgedächtnis angelegt
 - `todo.md` erstellt: Einkaufsliste (Radar, Raspberry Pi 4, Kabel, Messzubehör) mit
